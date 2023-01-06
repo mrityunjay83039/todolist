@@ -1,23 +1,44 @@
 import logo from './logo.svg';
 import './App.css';
+import {useState} from 'react';
 
 function App() {
+
+const [currentItem, addItem] = useState("");
+const [itemList, updateList] = useState([]);  // With state created an empty array too
+
+
+const inputEvent = (event) => {
+  addItem(event.target.value);
+ 
+}
+
+const listItems = () => {
+  updateList((prevItems) => {
+    return [...prevItems, currentItem];
+  });
+  addItem("");
+}
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 style={{textAlign:'center', color:'#fff', textDecoration:'underline'}}>To Do List</h1>
+      <input 
+        type="text"
+        placeholder="Add Items"
+        onChange={inputEvent}
+        value={currentItem}
+        />
+      <button onClick={listItems}>+</button>
+      <ol className="item_list">
+        {
+          itemList.map((inputVal) => {
+            return <li>{inputVal}</li>
+          })
+        }
+        
+      </ol>
     </div>
   );
 }
